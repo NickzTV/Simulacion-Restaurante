@@ -54,4 +54,13 @@ public class Platillo {
     public void setEsVegano(boolean esVegano) {
         this.esVegano = esVegano;
     }
+    @Override
+    public String toString() {
+        return "Nombre: " + nombre + " - Precio: $" + precio + "  -- Opcion vegana: " + esVegano;
+    }
+
+    //checar si ocupamos otras clases para los diferentes tipos de platillo, osea si es una bebida o no, postre, etc.
+    // :,)
+
+
 }
