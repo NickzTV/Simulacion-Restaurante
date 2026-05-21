@@ -1,0 +1,37 @@
+========= MENU =========
+
+   PLATILLOS FUERTES
+   =================
+ - Pasta Fettuccini
+ - Pasta alfredo
+ - Pechuga en crema de chipotle
+ - Milanesa de res
+ - Lomo en salsa de arandano
+ - Corte de carne con salsa de cherri
+ - Tacos dorados
+
+  ====================
+
+       BEBIDAS
+   ===============
+ - Agua natural
+ - Soda
+ - Cherry temple
+ - Pink lemonade
+ - Te helado
+ - Vino tinto
+ - Bloody marry
+ - Cerveza
+
+  ====================
+
+       POSTRES
+   ===============
+ - Pie de queso
+ - Pie de manzana
+ - Brownies
+ - Flan
+ - Banana split
+ - Besos de nuez
+ - Galletas de chocolate
+ - Pan de platano
