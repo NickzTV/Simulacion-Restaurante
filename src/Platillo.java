@@ -1,18 +1,22 @@
 public class Platillo {
-    
 
     private String nombre;
     private int precio;
+    private String descripcion;
     private String TerminoCoccion;
-    private int TiempoPreparacion; 
-    private boolean esVegano;
-    
-    public Platillo(String nombre, int precio, String terminoCoccion, int tiempoPreparacion, boolean esVegano) {
+    private int TiempoPreparacion;
+    private Boolean esVegano;
+    private String alergenos;
+
+
+    public Platillo(String nombre, int precio, String descripcion, String terminoCoccion, int tiempoPreparacion, Boolean esVegano, String alergenos) {
         this.nombre = nombre;
         this.precio = precio;
+        this.descripcion = descripcion;
         TerminoCoccion = terminoCoccion;
         TiempoPreparacion = tiempoPreparacion;
         this.esVegano = esVegano;
+        this.alergenos = alergenos;
     }
 
     public String getNombre() {
@@ -47,20 +51,36 @@ public class Platillo {
         TiempoPreparacion = tiempoPreparacion;
     }
 
-    public boolean isEsVegano() {
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Boolean getEsVegano() {
         return esVegano;
     }
 
-    public void setEsVegano(boolean esVegano) {
+    public void setEsVegano(Boolean esVegano) {
         this.esVegano = esVegano;
     }
-    @Override
-    public String toString() {
-        return "Nombre: " + nombre + " - Precio: $" + precio + "  -- Opcion vegana: " + esVegano;
+
+    public String getAlergenos() {
+        return alergenos;
     }
 
-    //checar si ocupamos otras clases para los diferentes tipos de platillo, osea si es una bebida o no, postre, etc.
-    // :,)
+    public void setAlergenos(String alergenos) {
+        this.alergenos = alergenos;
+    }
+
+    @Override
+    public String toString() {
+        return "Nombre: " + getNombre() + " - Es vegano: " + getEsVegano() + " - Alergenos: " + alergenos + " - Precio: " + getPrecio()
+                + "\n Descripcion: " + getDescripcion();
+    }
+
 
 
 }
