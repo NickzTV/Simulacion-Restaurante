@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -13,13 +16,11 @@ public class Restaurante {
         
 
         System.out.println("=====Bienvenido al restaurante labubub======");
-        
 
-        
 
         //rutas de los archivos para la serializacion
         String rutaMenu = "Menu.txt";
-        String  rutaColaDeOrden = "ColaDeOrden.txt";
+        String  rutaColaDeOrden = "ColaDeOrden.dat";
 
         //cargar datos existentes (si hay)
 
@@ -34,7 +35,8 @@ public class Restaurante {
         int op = leerInt("Seleccione una opción", 1, 5);
 
         switch(op){
-            case 1:
+            case 1: leerMenu("Menu.txt");
+            break;
                 
         }
 
@@ -61,5 +63,19 @@ public class Restaurante {
 
     private static void ReporteFechas(){
 
+    }
+
+    //Lee el archivo de texto del menu
+    public static void leerMenu(String nombreArchio){
+        try (BufferedReader lector = new BufferedReader(new FileReader(nombreArchio))){
+
+            String linea;
+            while ((linea = lector.readLine()) != null){
+                System.out.println(linea);
+            }
+
+        }catch (IOException e){
+            System.err.println("Error al leer el archivo: " + e.getMessage());
+        }
     }
 }
