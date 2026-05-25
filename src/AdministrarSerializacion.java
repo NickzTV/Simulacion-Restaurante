@@ -8,7 +8,7 @@ public class AdministrarSerializacion {
         try (ObjectOutputStream escritorObjetos = new ObjectOutputStream(new FileOutputStream(nombreArchio))) {
 
             escritorObjetos.writeObject(lista);
-            System.out.println("El menu fue escrito en: " + nombreArchio);
+            System.out.println("La orden fue escrito en: " + nombreArchio);
 
         }catch (IOException e){
             System.err.println("Error al guardar la lista: " + e.getMessage());
@@ -25,6 +25,34 @@ public class AdministrarSerializacion {
 
         }catch (IOException e){
             guardarObjetosColaDeOrden(new ArrayList<ColaDeOrden>(), nombreArchivo);
+        }catch (ClassNotFoundException e){
+            System.err.println("Error al leer la cola de orden de " + nombreArchivo);
+        }
+        return null;
+    }
+
+    //se guarda el HISTORIAL dentro de un Arraylist
+    public static void guardarObjetosHistorial (ArrayList<HistorialDePedidos> lista, String nombreArchio){
+        try (ObjectOutputStream escritorObjetosHistorial = new ObjectOutputStream(new FileOutputStream(nombreArchio))) {
+
+            escritorObjetosHistorial.writeObject(lista);
+            System.out.println("La orden fue escrito en: " + nombreArchio);
+
+        }catch (IOException e){
+            System.err.println("Error al guardar la lista: " + e.getMessage());
+        }
+    }
+
+    //se LEE EL HISTORIAL del arraylist
+    public static ArrayList<HistorialDePedidos> LeerObjectosHistorial(String nombreArchivo){
+        try(ObjectInputStream lectorObjetosHistorial = new ObjectInputStream(new FileInputStream(nombreArchivo))){
+
+            ArrayList<HistorialDePedidos> listaRecuperada = (ArrayList<HistorialDePedidos>) lectorObjetosHistorial.readObject();
+            System.out.println("La cola de orden de " + listaRecuperada.size() + " platillos fue recuperada de " + nombreArchivo);
+            return listaRecuperada;
+
+        }catch (IOException e){
+            guardarObjetosHistorial(new ArrayList<HistorialDePedidos>(), nombreArchivo);
         }catch (ClassNotFoundException e){
             System.err.println("Error al leer la cola de orden de " + nombreArchivo);
         }
