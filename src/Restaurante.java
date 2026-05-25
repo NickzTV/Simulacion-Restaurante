@@ -78,4 +78,18 @@ public class Restaurante {
             System.err.println("Error al leer el archivo: " + e.getMessage());
         }
     }
+    public static void main(String[] args) {
+     Scanner scanner = new Scanner(System.in);
+     Preparar preparar = new Preparar();
+     
+     int cantidadPlatillos = 0;
+     Thread[] hilos = new Thread[cantidadPlatillos]; //aqui se debe revisar cada lista de los diferentes tipos de pedidos
+
+
+     for(Thread hilo: hilos){
+        hilos.start();
+     }
+
+
+    }
 }

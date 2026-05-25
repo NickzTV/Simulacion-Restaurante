@@ -1,4 +1,4 @@
-public class Empleados {
+public class Empleados implements Runnable{
   
   private String nombre;
   private int AniosExperiencia;
@@ -42,5 +42,12 @@ public class Empleados {
 
     public void setId(int id) {
         Id = id;
+    }
+    @Override
+    public void run(){
+        System.out.println(nombre +" ha recibido el pedido " +pedido);
+        preparar.preparando(nombre, pedido.getNombre(), pedido.getTiempoPreparacion());
+
+        System.out.println(nombre + " ha entregado el pedido " +pedido.getNombre());
     }
 }

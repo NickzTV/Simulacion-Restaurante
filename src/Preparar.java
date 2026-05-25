@@ -9,7 +9,7 @@ public class Preparar {
         catch (InterruptedException e){
             System.out.println(e);
         }
-        System.out.println()
+        System.out.println(nombre+ " ha terminado el pedido " +nombrePlatillo);
         //aqui tendra los pasos para simular la preparacion del platillo
         //se menciona el nombre del chef, su area de especialidad, y el nombre del platillo.
         // Utilizar hilos, para poder simular la preparacion del platillo  y dependiendo de la informacion del platillo es lo que se tardara en cocinar dentro del archivo txt.
