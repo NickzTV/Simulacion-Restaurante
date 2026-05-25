@@ -8,4 +8,29 @@ public class Postre extends Platillo{
         this.esVegano = esVegano;
         this.esDiabetico = esDiabetico;
     }
+
+    public Boolean getEsVegano() {
+        return esVegano;
+    }
+
+    public void setEsVegano(Boolean esVegano) {
+        this.esVegano = esVegano;
+    }
+
+    public Boolean getEsDiabetico() {
+        return esDiabetico;
+    }
+
+    public void setEsDiabetico(Boolean esDiabetico) {
+        this.esDiabetico = esDiabetico;
+    }
+
+    @Override
+    public String toString() {
+        return "Nombre: " + getNombre() + " - es Vegano: " + esVegano + " - es Diabetico: " + esDiabetico + " - Precio: " + getPrecio()
+                + "\n Descripcion: " + getDescripcion();
+    }
+
+
+
 }

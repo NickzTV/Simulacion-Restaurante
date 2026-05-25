@@ -11,6 +11,27 @@ public class Cliente {
         TieneReservado = tieneReservado;
     }
 
-    
+    public String getNombre() {
+        return nombre;
+    }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getNumeroMesa() {
+        return numeroMesa;
+    }
+
+    public void setNumeroMesa(int numeroMesa) {
+        this.numeroMesa = numeroMesa;
+    }
+
+    public boolean isTieneReservado() {
+        return TieneReservado;
+    }
+
+    public void setTieneReservado(boolean tieneReservado) {
+        TieneReservado = tieneReservado;
+    }
 }

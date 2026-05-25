@@ -6,5 +6,19 @@ public class Bebida extends Platillo{
         this.hieloExtra = hieloExtra;
     }
 
+    public Boolean getHieloExtra() {
+        return hieloExtra;
+    }
+
+    public void setHieloExtra(Boolean hieloExtra) {
+        this.hieloExtra = hieloExtra;
+    }
+
+    @Override
+    public String toString() {
+        return "Nombre: " + getNombre() + " - Hielo extra: " + hieloExtra + " - Precio: " + getPrecio()
+                + "\n Descripcion: " + getDescripcion();
+    }
+
 
 }
