@@ -42,13 +42,13 @@ public class Restaurante {
         System.out.println("5.- Salir");
         int op = leerInt("Seleccione una opción", 1, 5);
 
-        switch(op){
-            case 1: leerMenu("Menu.txt");
-            break;
-            case 5:
-                salir = true;
+            switch(op){
+                case 1: leerMenu("Menu.txt");
                 break;
-        }
+                case 5:
+                    salir = true;
+                    break;
+            }
         }
         System.exit(0);
     }
@@ -84,7 +84,7 @@ public class Restaurante {
     }
         //throw new UnsupportedOperationException("Unimplemented method 'leerInt'");
         
-    //}
+    //lee el archivo de texto del menu
     public static void leerMenu(String nombreArchivo){
         try (BufferedReader lector = new BufferedReader(new FileReader(nombreArchivo))){
 
@@ -98,35 +98,3 @@ public class Restaurante {
         }
     }
 }
-/* 
-    private static  void MostrarMenu(){
-
-    }
-
-    private static void  AgregarOrden(){
-
-    }
-
-    private static void ReporteOrdenes(){
-
-    }
-
-    private static void ReporteFechas(){
-
-    }
-
-    //Lee el archivo de texto del menu
-    public static void leerMenu(String nombreArchio){
-        try (BufferedReader lector = new BufferedReader(new FileReader(nombreArchio))){
-
-            String linea;
-            while ((linea = lector.readLine()) != null){
-                System.out.println(linea);
-            }
-
-        }catch (IOException e){
-            System.err.println("Error al leer el archivo: " + e.getMessage());
-        }
-    }
-}
-*/

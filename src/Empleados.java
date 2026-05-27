@@ -43,6 +43,7 @@ public class Empleados implements Runnable{
     public void setId(int id) {
         Id = id;
     }
+
     @Override
     public void run(){
         System.out.println(nombre +" ha recibido el pedido " +pedido);

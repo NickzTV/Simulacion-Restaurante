@@ -20,7 +20,7 @@ public class ColaDeOrden implements Serializable {
         this.platillo = platillo;
     }
 
-    //lo que se escribe dentro del archivo del hitorial de pedidos
+
     @Override
     public String toString() {
         return "Pedidos{ " + "platillo=" + platillo
