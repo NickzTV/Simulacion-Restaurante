@@ -97,4 +97,43 @@ public class Restaurante {
             System.err.println("Error al leer el archivo: " + e.getMessage());
         }
     }
+
+    public static void registrarOrden(ArrayList /* <Platillo> lista */){
+        boolean confirmarPedido = false;
+
+        System.out.print("Ingrese el nombre del platillo que desea pedir: ");
+        String pedido = sc.next().toLowerCase();
+
+        while (!confirmarPedido) {
+            while (pedido.isEmpty()) {
+                System.out.println("El pedido no puede estar vacio.");
+                pedido = sc.nextLine().trim();
+            }
+            //realizar lo siguiente:
+            //checar si lo que ingreso el usuario es lo mismo que un platillo(objeto) existente
+
+            try{
+                System.out.println("Desea agregar otro pedido? (1-SI 2-NO)");
+                int opcion = sc.nextInt();
+
+                if (opcion < 1 || opcion > 2) {
+                    throw new IllegalArgumentException("Opcion no valida.");
+                }
+
+                if (opcion == 1) {
+                    confirmarPedido = false;
+                } else if (opcion == 2) {
+
+                    //realizar lo siguiente:
+                    //agrega la orden dentro de la cola de orden y historial
+
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+
+        }
+    }
+
+
 }
