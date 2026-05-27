@@ -34,4 +34,12 @@ public class Cliente {
     public void setTieneReservado(boolean tieneReservado) {
         TieneReservado = tieneReservado;
     }
+
+    public void imprimirReserva() {
+        if (TieneReservado) {
+            System.out.println("El cliente tiene mesa reservada");
+        } else {
+            System.out.println("El cliente no tiene mesa reservada");
+        }
+    }
 }
