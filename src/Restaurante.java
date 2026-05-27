@@ -85,7 +85,7 @@ public class Restaurante {
         //throw new UnsupportedOperationException("Unimplemented method 'leerInt'");
         
     //}
-    pubLic static void leerMenu(String nombreArchivo){
+    public static void leerMenu(String nombreArchivo){
         try (BufferedReader lector = new BufferedReader(new FileReader(nombreArchivo))){
 
             String linea;
@@ -129,3 +129,4 @@ public class Restaurante {
         }
     }
 }
+*/
