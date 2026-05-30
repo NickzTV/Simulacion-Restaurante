@@ -20,6 +20,12 @@ public class ColaDeOrden implements Serializable {
         this.platillo = platillo;
     }
 
+    public LocalDateTime getFechaYHora() {
+        return fechaYHora;
+    }
+    public void setFechaYHora(LocalDateTime fechaYHora) {
+        this.fechaYHora = fechaYHora;
+    }
 
     @Override
     public String toString() {

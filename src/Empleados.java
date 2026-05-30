@@ -1,15 +1,17 @@
 public class Empleados implements Runnable{
   
   private String nombre;
-  private int AniosExperiencia;
+  private int aniosExperiencia;
   private int edad;
-  private int Id;
+  private int id;
+  private Preparar preparar;
   
    public Empleados (String nombre, int aniosExperiencia, int edad, int id) {
     this.nombre = nombre;
-    AniosExperiencia = aniosExperiencia;
+    this.aniosExperiencia = aniosExperiencia;
     this.edad = edad;
-    Id = id;
+    this.id = id;
+    this.preparar = new Preparar(); //para inicializar el simulador
   }
 
     public String getNombre() {
@@ -17,7 +19,7 @@ public class Empleados implements Runnable{
     }
 
     public int getAniosExperiencia() {
-        return AniosExperiencia;
+        return aniosExperiencia;
     }
 
     public int getEdad() {
@@ -25,7 +27,7 @@ public class Empleados implements Runnable{
     }
 
     public int getId() {
-        return Id;
+        return id;
     }
 
     public void setNombre(String nombre) {
@@ -33,7 +35,7 @@ public class Empleados implements Runnable{
     }
 
     public void setAniosExperiencia(int aniosExperiencia) {
-        AniosExperiencia = aniosExperiencia;
+        this.aniosExperiencia = aniosExperiencia;
     }
 
     public void setEdad(int edad) {
@@ -41,14 +43,28 @@ public class Empleados implements Runnable{
     }
 
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
 
     @Override
     public void run(){
-        System.out.println(nombre +" ha recibido el pedido " +pedido);
-        preparar.preparando(nombre, pedido.getNombre(), pedido.getTiempoPreparacion());
-
-        System.out.println(nombre + " ha entregado el pedido " +pedido.getNombre());
+        while (true){
+            ColaDeOrden ordenAsignada = Restaurante.tomarPlatilloPorEspecialidad(this);
+            if(ordenAsignada != null){
+                Platillo platillo = ordenAsignada.getPlatillo();
+                System.out.println(nombre + " ha recibido el pedido: " +platillo.getNombre());
+                //aqui llama al metodo para simular el tiempo de preparacion del platillo
+                preparar.preparando(nombre, platillo.getNombre(), platillo.getTiempoPreparacion());
+                System.out.println(nombre + " ha entregado el pedido: " +platillo.getNombre());
+            }else {
+                //si no hay pedidos de su especialidad, se espera
+                try{
+                    Thread.sleep(1000); //espera 1 segundo antes de revisar nuevamente
+                }catch (InterruptedException e){
+                    System.out.println(nombre + " ha sido interrumpido.");
+                    break;
+                }
+            }
+        }
     }
 }

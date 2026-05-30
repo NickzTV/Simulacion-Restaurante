@@ -45,6 +45,7 @@ public class Restaurante {
             switch(op){
                 case 1: leerMenu("Menu.txt");
                 break;
+                case 2: registrarOrden();
                 case 5:
                     salir = true;
                     break;
@@ -57,7 +58,8 @@ public class Restaurante {
         for (int i=0; i < colaDeOrdenes.size();i++) {
             ColaDeOrden orden = colaDeOrdenes.get(i);
             Platillo platillo = orden.getPlatillo();
-            
+
+            //para validar las especialidades 
             if (empleado instanceof Chef && platillo instanceof PlatilloFuerte){
                 return colaDeOrdenes.remove(i); //una vez que se inicia el pedido, tambien se elimina de la cola de ordenes
             }
@@ -70,10 +72,11 @@ public class Restaurante {
         }
         return null; //si no hay ordenes disponibles para el empleado, se devuelve null
     }
-    private static int leerInt(String string, int i, int j) {
+    //validacion para cuando se pide un numero en cierto rango
+    private static int leerInt(String mensaje, int i, int j) {
         int opcion;
         do{
-            System.out.print(string + ": ");
+            System.out.print(mensaje + ": ");
             while (!sc.hasNextInt()){
                 System.out.println("Entrada no válida. Por favor, ingrese un número entero.");
                 sc.next(); // Limpiar la entrada no válida
@@ -82,7 +85,6 @@ public class Restaurante {
         }while (opcion < i || opcion > j);
         return opcion;
     }
-        //throw new UnsupportedOperationException("Unimplemented method 'leerInt'");
         
     //lee el archivo de texto del menu
     public static void leerMenu(String nombreArchivo){
@@ -98,42 +100,51 @@ public class Restaurante {
         }
     }
 
-    public static void registrarOrden(ArrayList /* <Platillo> lista */){
-        boolean confirmarPedido = false;
+    public static void registrarOrden(){
+        sc.nextLine();
 
-        System.out.print("Ingrese el nombre del platillo que desea pedir: ");
-        String pedido = sc.next().toLowerCase();
-
-        while (!confirmarPedido) {
-            while (pedido.isEmpty()) {
-                System.out.println("El pedido no puede estar vacio.");
-                pedido = sc.nextLine().trim();
-            }
-            //realizar lo siguiente:
-            //checar si lo que ingreso el usuario es lo mismo que un platillo(objeto) existente
-
-            try{
-                System.out.println("Desea agregar otro pedido? (1-SI 2-NO)");
-                int opcion = sc.nextInt();
-
-                if (opcion < 1 || opcion > 2) {
-                    throw new IllegalArgumentException("Opcion no valida.");
-                }
-
-                if (opcion == 1) {
-                    confirmarPedido = false;
-                } else if (opcion == 2) {
-
-                    //realizar lo siguiente:
-                    //agrega la orden dentro de la cola de orden y historial
-
-                }
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-
+        System.out.println("=====Registrar nueva orden=====");
+        System.out.println("Ingrese el nombre del cliente: ");
+        String nombreCliente = sc.nextLine();
+        while(nombreCliente.isEmpty()){
+            System.out.println("El nombre no puede estar vacío. Ingrese el nombre del cliente: ");
+            nombreCliente = sc.nextLine();
         }
+        System.out.println("Ingrese el número de mesa: ");
+        int numMesa = leerInt("Número de mesa", 1, 50);//no se cuantas mesas tenemos en el restaurante
+        //sobre el cliente
+        Cliente cliente = new Cliente(nombreCliente, numMesa, false);
+        sc.nextLine();
+        boolean agregarMas = true;
+        while (agregarMas){
+            System.out.println("Ingrese el nombre del platillo que desea pedir: ");
+            String nombrePedido = sc.nextLine();
+            while(nombrePedido.isEmpty()){
+                System.out.println("El pedido no puede estar vacío. Ingrese el nombre del platillo: ");
+                nombrePedido = sc.nextLine();
+            }
+            Platillo platilloEncontrado = null;
+            for (Platillo p: Menu){
+                if(p.getNombre().equalsIgnoreCase(nombrePedido)){
+                    platilloEncontrado = p;
+                    break;
+                }
+            }
+            if (PlatilloEncontrado != null){
+                ColaDeOrden nuevaOrden = new ColaDeOrden(platilloEncontrado, LocalDateTime.now(), cliente);
+                colaDeOrdenes.add(nuevaOrden);
+                System.out.println("El pedido ha sido agregado");
+            }else{
+                System.out.println("Lo sentimos, '"+nombrePedido+"' no se encuentra en nuestro menú");
+            }
+            System.out.println("¿Desea agregar otro pedido a la misma mesa? (1-SI 2-NO)");
+            int opcion = leerInt("Seleccione una opción", 1, 2);
+            sc.nextLine();
+            if (opcion == 2){
+                agregarMas = false;
+            }
+        }
+        System.out.println("La orden ha sido enviada correctamente a la cocina");
+        System.out.println("En un momento recibira su orden");
     }
-
-
 }
