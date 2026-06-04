@@ -26,7 +26,7 @@ public class PanelMenu extends JPanel{
         JScrollPane scrollPane = new JScrollPane(txtMenu);
         add(scrollPane, BorderLayout.CENTER);
 
-        JButton btnVolver = new JButton("Volver al inicio");
+        JButton btnVolver = new JButton("Volver al menú");
         JButton btnRefrescar = new JButton("Cargar menú");
         JButton btnIrOrden = new JButton("Ordenar");
 
@@ -53,12 +53,12 @@ public class PanelMenu extends JPanel{
         panelBotones.add(btnIrOrden);
         add(panelBotones, BorderLayout.SOUTH);
 
-        btnVolver.addActionListener(e -> marco.mostrar("INICIO"));
+        btnVolver.addActionListener(e -> marco.mostrar("Menu"));
         btnIrOrden.addActionListener(e -> marco.mostrar("AGREGAR"));
         btnRefrescar.addActionListener(e -> {
             txtMenu.setText("");
 
-            if(Restaurante.Menu.isEmpty()){
+            if(Restaurante.Menu == null || Restaurante.Menu.isEmpty()){
                 txtMenu.setText("El menú está vacío.");
                 return;
             } 
@@ -74,7 +74,16 @@ public class PanelMenu extends JPanel{
                     } else if (p instanceof Postre){
                         categoria = "Postre";
                     }
-                    long tiempoSegundos = p.getTiempoPreparacion()/1000;
+
+                    long tiempoSegundos = 15;
+                    try{
+                        long tiempoMili = p.getTiempoPreparacion();
+                        if (tiempoMili>0){
+                            tiempoSegundos = tiempoMili/100;
+                        }
+                    }catch (Exception ex){
+                        
+                    }
                     
                     txtMenu.append(String.format("%-15s %-25s $%-9.2f %d segundos\n", categoria, p.getNombre(), p.getPrecio(), tiempoSegundos));
                 }
