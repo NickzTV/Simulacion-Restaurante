@@ -96,7 +96,7 @@ public class PanelFiltroFecha extends JPanel{
                     String fechaStr = orden.getFechaYHora().format(formateador);
                     String platillo = orden.getPlatillo().getNombre();
                     double precio = orden.getPlatillo().getPrecio();
-                    txtReporteFecha.append(String.format("%-22s %-25s $%-15.2f\n", fechaStr, platillo, precio));
+                    txtReporteFecha.append(String.format("%-22s %-25s $%-15.2f\n", fechaStr, platillo, (double) precio));
                 }
         });
     }

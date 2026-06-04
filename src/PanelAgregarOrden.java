@@ -157,16 +157,26 @@ public class PanelAgregarOrden extends JPanel{
             int indexPlatillo = comboPlatillos.getSelectedIndex();
             Platillo platilloEncontrado = Restaurante.Menu.get(indexPlatillo);
             if(platilloEncontrado != null){
+                Platillo platilloParaOrden;
                 if (platilloEncontrado instanceof PlatilloFuerte){
                     String terminoStr = (String) comboTerminos.getSelectedItem();
-                    ((PlatilloFuerte) platilloEncontrado).setTerminoCoccion(terminoStr);
+                    platilloParaOrden = new PlatilloFuerte(
+                            platilloEncontrado.getNombre(),
+                            platilloEncontrado.getPrecio(),
+                            platilloEncontrado.getDescripcion(),
+                            platilloEncontrado.getTiempoPreparacion(),
+                            platilloEncontrado.getAlergenos(),
+                            terminoStr
+                    );
+                } else {
+                    platilloParaOrden = platilloEncontrado;
                 }
                 Cliente cliente = new Cliente(nombreCliente, numeroMesa, false);
-                ColaDeOrden nuevaOrden = new ColaDeOrden(platilloEncontrado, LocalDateTime.now(), cliente);
+                ColaDeOrden nuevaOrden = new ColaDeOrden(platilloParaOrden, LocalDateTime.now(), cliente);
 
                 Restaurante.colaDeOrdenes.add(nuevaOrden);
 
-                txtConsolaEstado.append("Orden agregada: "+platilloEncontrado.getNombre()+" para mesa " +numeroMesa +" ("+nombreCliente +")");
+                txtConsolaEstado.append("Orden agregada: "+platilloEncontrado.getNombre()+" para mesa " +numeroMesa +" ("+nombreCliente +")\n");
                 JOptionPane.showMessageDialog(this, "Orden enviada a la cocina con éxito");
 
                 txtCliente.setText("");

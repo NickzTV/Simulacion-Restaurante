@@ -54,7 +54,7 @@ public class PanelCompletadas extends JPanel{
         panelBotones.add(btnCargarHistorial);
         add(panelBotones, BorderLayout.SOUTH);
 
-        btnVolver.addActionListener(e -> marco.mostrar("Menu"));
+        btnVolver.addActionListener(e -> marco.mostrar("INICIO"));
 
         btnCargarHistorial.addActionListener(e -> {
             txtHistorial.setText("");
@@ -74,8 +74,7 @@ public class PanelCompletadas extends JPanel{
 
                     String horaStr = orden.getFechaYHora().format(formateador);
 
-                    txtHistorial.append(String.format("%-25s $%-14.2f %s hrs\n", nombrePlatillo, precio, horaStr));
-            }
+                    txtHistorial.append(String.format("%-25s $%-14.2f %s hrs\n", nombrePlatillo, (double) precio, horaStr));            }
         });
     }
 

@@ -53,7 +53,7 @@ public class PanelMenu extends JPanel{
         panelBotones.add(btnIrOrden);
         add(panelBotones, BorderLayout.SOUTH);
 
-        btnVolver.addActionListener(e -> marco.mostrar("Menu"));
+        btnVolver.addActionListener(e -> marco.mostrar("INICIO"));
         btnIrOrden.addActionListener(e -> marco.mostrar("AGREGAR"));
         btnRefrescar.addActionListener(e -> {
             txtMenu.setText("");
@@ -84,9 +84,8 @@ public class PanelMenu extends JPanel{
                     }catch (Exception ex){
                         
                     }
-                    
-                    txtMenu.append(String.format("%-15s %-25s $%-9.2f %d segundos\n", categoria, p.getNombre(), p.getPrecio(), tiempoSegundos));
-                }
+
+                    txtMenu.append(String.format("%-15s %-25s $%-9.2f %d segundos\n", categoria, p.getNombre(), (double) p.getPrecio(), tiempoSegundos));                }
         });
     }
 

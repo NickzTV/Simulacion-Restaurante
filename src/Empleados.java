@@ -66,6 +66,7 @@ public class Empleados implements Runnable{
                 try{
                     Thread.sleep(1000); //espera 1 segundo antes de revisar otra vez :P
                 }catch (InterruptedException e){
+                    Thread.currentThread().interrupt();
                     System.out.println(nombre + " ha sido interrumpido.");
                     break;
                 }
