@@ -73,7 +73,7 @@ public class PanelMenu extends JPanel{
                     } else if (p instanceof Postre){
                         categoria = "Postre";
                     }
-                    long tiempoPreparacion = p.getTiempoPreparacion()/1000;
+                    long tiempoSegundos = p.getTiempoEstimado()/1000;
                     
                     txtMenu.append(String.format("%-15s %-25s $%-9.2f %d segundos\n", categoria, p.getNombre(), p.getPrecio(), tiempoSegundos));
                 }
