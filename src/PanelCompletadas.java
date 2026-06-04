@@ -68,11 +68,11 @@ public class PanelCompletadas extends JPanel{
 
                 DateTimeFormatter formateador = DateTimeFormatter.ofPattern("HH:mm:ss");
 
-                for(ColaDeOrden orden : Restaurante.hisorial){
+                for(HistorialDePedidos orden : Restaurante.historial){
                     String nombrePlatillo = orden.getPlatillo().getNombre();
                     double precio = orden.getPlatillo().getPrecio();
 
-                    String horaStr = orden.getFechaHora().format(formateador);
+                    String horaStr = orden.getFechaYHora().format(formateador);
 
                     txtHistorial.append(String.format("%-25s $%-14.2f %s hrs\n", nombrePlatillo, precio, horaStr));
             }

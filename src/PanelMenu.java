@@ -47,6 +47,7 @@ public class PanelMenu extends JPanel{
             }
         }
 
+        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
         panelBotones.add(btnVolver);
         panelBotones.add(btnRefrescar);
         panelBotones.add(btnIrOrden);
@@ -73,7 +74,7 @@ public class PanelMenu extends JPanel{
                     } else if (p instanceof Postre){
                         categoria = "Postre";
                     }
-                    long tiempoSegundos = p.getTiempoEstimado()/1000;
+                    long tiempoSegundos = p.getTiempoPreparacion()/1000;
                     
                     txtMenu.append(String.format("%-15s %-25s $%-9.2f %d segundos\n", categoria, p.getNombre(), p.getPrecio(), tiempoSegundos));
                 }

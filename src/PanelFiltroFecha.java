@@ -81,19 +81,19 @@ public class PanelFiltroFecha extends JPanel{
                 txtReporteFecha.setText("No hay órdenes registradas en el historial");
                 return;
             }
-            ArrayList<ColaDeOrden> listaFiltrada = new ArrayList<>(Restaurante.historial);
+            ArrayList<HistorialDePedidos> listaFiltrada = new ArrayList<>(Restaurante.historial);
             int opcionSeleccionada = comboOrden.getSelectedIndex();
             if(opcionSeleccionada ==0){
-                listaFiltrada.sort(Comparator.comparing(ColaDeOrden::getFechaHora));
+                listaFiltrada.sort(Comparator.comparing(HistorialDePedidos::getFechaYHora));
             }else{
-                listaFiltrada.sort(Comparator.comparing(ColaDeOrden::getFechaHora).reversed());
+                listaFiltrada.sort(Comparator.comparing(HistorialDePedidos::getFechaYHora).reversed());
             }
                 txtReporteFecha.append(String.format("%-22s %-25s %-15s\n", "FECHA Y HORA", "PLATILLO", "PRECIO"));
                 txtReporteFecha.append("-------------------------------------------------------------\n");
                 DateTimeFormatter formateador = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-                for(ColaDeOrden orden : listaFiltrada){
-                    String fechaStr = orden.getFechaHora().format(formateador);
+                for(HistorialDePedidos orden : listaFiltrada){
+                    String fechaStr = orden.getFechaYHora().format(formateador);
                     String platillo = orden.getPlatillo().getNombre();
                     double precio = orden.getPlatillo().getPrecio();
                     txtReporteFecha.append(String.format("%-22s %-25s $%-15.2f\n", fechaStr, platillo, precio));

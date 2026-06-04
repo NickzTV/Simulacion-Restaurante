@@ -61,7 +61,7 @@ public class PanelAgregarOrden extends JPanel{
         gbc.gridx = 1;
         comboPlatillos = new JComboBox<>();
         comboPlatillos.setFont(new Font("Arial", Font.PLAIN, 14));
-        for(Platillos p: Restaurante.Menu){
+        for(Platillo p : Restaurante.Menu){
             comboPlatillos.addItem(p.getNombre());
         }
         panelFormulario.add(comboPlatillos, gbc);
@@ -115,12 +115,12 @@ public class PanelAgregarOrden extends JPanel{
         add(panelBotones, BorderLayout.SOUTH);
 
         comboPlatillos.addActionListener(e ->{
-            int indes = comboPlatillos.getSelectedIndex();
+            int index = comboPlatillos.getSelectedIndex();
             if (index>=0){
                 Platillo seleccionado = Restaurante.Menu.get(index);
-                if (selecionado instanceof PlatilloFuerte){
+                if (seleccionado instanceof PlatilloFuerte){
                     comboTerminos.setEnabled(true);
-                    lblTermino.setEnable(true);
+                    lblTermino.setEnabled(true);
                 }else{
                     comboTerminos.setEnabled(false);
                     lblTermino.setEnabled(false);

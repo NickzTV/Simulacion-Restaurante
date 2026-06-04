@@ -8,7 +8,7 @@ public class PanelInicio extends JPanel{
         setLayout(new BorderLayout());
         setBackground(new Color(181, 120, 83));
 
-        JLabel titulo = new JLabel("Restaurante");
+        JLabel titulo = new JLabel("Restaurante Labubu");
         titulo.setHorizontalAlignment(SwingConstants.CENTER);
         titulo.setFont(new Font("ASLON TITLING", Font.BOLD, 50));
         titulo.setForeground(new Color(120, 62, 23));
@@ -25,14 +25,14 @@ public class PanelInicio extends JPanel{
         JButton[] botones = {btnMenu, btnAgregar, btnCompletadas, btnFiltroFecha, btnSalir};
 
         JPanel panelBotones = new JPanel();
-        panel.Botones.setLayout(new BoxLayout(panelBotones, BoxLayout.Y_AXIS));
-        panel.Botones.setBackground(new Color(181, 120, 83));
+        panelBotones.setLayout(new BoxLayout(panelBotones, BoxLayout.Y_AXIS));
+        panelBotones.setBackground(new Color(181, 120, 83));
         panelBotones.setOpaque(true);
 
         Font fuenteBoton = new Font("Spectrum", Font.BOLD, 22);
         Color bcolor = new Color(161, 109, 64);
 
-        for(JButtonn b : botones){
+        for(JButton b : botones){
             b.setAlignmentX(Component.CENTER_ALIGNMENT);
             b.setMaximumSize(tamBoton);
             b.setPreferredSize(tamBoton);
@@ -51,7 +51,7 @@ public class PanelInicio extends JPanel{
         centro.add(panelBotones);
         add(centro, BorderLayout.CENTER);
 
-        btnMenu.addActionListener(e -> marco.mostrar("MENU"));
+        btnMenu.addActionListener(e -> marco.mostrar("Menu"));
         btnAgregar.addActionListener(e -> marco.mostrar("AGREGAR"));
         btnCompletadas.addActionListener(e -> marco.mostrar("COMPLETADAS"));
         btnFiltroFecha.addActionListener(e -> marco.mostrar("FECHA"));
