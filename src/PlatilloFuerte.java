@@ -1,23 +1,18 @@
 public class PlatilloFuerte extends Platillo{
     private String terminoCoccion;
-
-    public PlatilloFuerte(String nombre, int precio, String descripcion, int tiempoPreparacion, String alergenos) {
+    public PlatilloFuerte(String nombre, int precio, String descripcion, int tiempoPreparacion, String alergenos, String terminoCoccion) {
         super(nombre, precio, descripcion, tiempoPreparacion, alergenos);
-        this.terminoCoccion = terminoCoccion;
+        this.terminoCoccion = terminoCoccion; // <-- ahora se recibe como parametro
     }
-
     public String getTerminoCoccion() {
         return terminoCoccion;
     }
-
     public void setTerminoCoccion(String terminoCoccion) {
         this.terminoCoccion = terminoCoccion;
     }
-
     @Override
     public String toString() {
         return "Nombre: " + getNombre() + " - Termino de Coccion: " + terminoCoccion + " - Precio: " + getPrecio()
                 + "\n Descripcion: " + getDescripcion();
     }
-
 }

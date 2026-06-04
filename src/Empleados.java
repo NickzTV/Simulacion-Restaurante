@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+
 public class Empleados implements Runnable{
   
   private String nombre;
@@ -11,7 +13,7 @@ public class Empleados implements Runnable{
     this.aniosExperiencia = aniosExperiencia;
     this.edad = edad;
     this.id = id;
-    this.preparar = new Preparar(); //para inicializar el simulador
+    this.preparar = new Preparar(); 
   }
 
     public String getNombre() {
@@ -53,13 +55,16 @@ public class Empleados implements Runnable{
             if(ordenAsignada != null){
                 Platillo platillo = ordenAsignada.getPlatillo();
                 System.out.println(nombre + " ha recibido el pedido: " +platillo.getNombre());
-                //aqui llama al metodo para simular el tiempo de preparacion del platillo
-                preparar.preparando(nombre, platillo.getNombre(), platillo.getTiempoPreparacion());
+               
+                preparar.preparando(nombre, platillo.getNombre(), platillo.getTiempoPreparacion(), this);
                 System.out.println(nombre + " ha entregado el pedido: " +platillo.getNombre());
+            
+                HistorialDePedidos pedidoCompletado = new HistorialDePedidos(platillo, LocalDateTime.now(), ordenAsignada.getCliente());
+                Restaurante.agregarAlHistorial(pedidoCompletado);
             }else {
                 //si no hay pedidos de su especialidad, se espera
                 try{
-                    Thread.sleep(1000); //espera 1 segundo antes de revisar nuevamente
+                    Thread.sleep(1000); //espera 1 segundo antes de revisar otra vez :P
                 }catch (InterruptedException e){
                     System.out.println(nombre + " ha sido interrumpido.");
                     break;

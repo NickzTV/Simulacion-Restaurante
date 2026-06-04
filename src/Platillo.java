@@ -1,4 +1,5 @@
-public class Platillo {
+import java.io.Serializable;
+public class Platillo implements Serializable {
 
     private String nombre;
     private int precio;

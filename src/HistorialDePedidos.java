@@ -21,6 +21,14 @@ public class HistorialDePedidos implements Serializable {
         this.platillo = platillo;
     }
 
+    public LocalDateTime getFechaYHora() { 
+        return fechaYHora;
+    }
+
+    public void setFechaYHora(LocalDateTime fechaYHora) {
+        this.fechaYHora = fechaYHora;
+    }
+
     //lo que se escribe dentro del archivo del hitorial de pedidos
     @Override
     public String toString() {
