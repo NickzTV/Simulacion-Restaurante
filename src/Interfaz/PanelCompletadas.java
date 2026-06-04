@@ -2,8 +2,7 @@ package Interfaz;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.*;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 public class PanelCompletadas extends JPanel{
     private MarcoSencillo marco;
     private JTextArea txtHistorial;
@@ -35,7 +34,7 @@ public class PanelCompletadas extends JPanel{
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 25, 20));
         panelBotones.setOpaque(false);
 
-        JButton btnVolver = new JButton("Volver al inicio");
+        JButton btnVolver = new JButton("Volver al menú");
         JButton btnCargarHistorial = new JButton("Cargar historial");
 
         Font fuenteBtn = new Font("Arial", Font.BOLD, 14);
@@ -56,39 +55,27 @@ public class PanelCompletadas extends JPanel{
         panelBotones.add(btnCargarHistorial);
         add(panelBotones, BorderLayout.SOUTH);
 
-        btnVolver.addActionListener(e -> marco.mostrar("INICIO"));
+        btnVolver.addActionListener(e -> marco.mostrar("Menu"));
 
         btnCargarHistorial.addActionListener(e -> {
             txtHistorial.setText("");
 
-            File archivo = new File("Historial.dat");
-
-            if(!archivo.exists()){
-                txtHistorial.setText("No se ha encontrado el archivo de historial.");
+            if(Restaurante.historial == null || Restaurante.historial.isEmpty()){
+                txtHistorial.setText("No hay órdenes completadas en el historial actual");
                 return;
             }
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))){
-                @SuppressWarnings("unchecked")
-                ArrayList<ColaDeOrdene> hisorial = (ArrayList<ColaDeOrdene>) ois.readObject();
-
-                if(listaCompletadas.isEmpty()){
-                    txtHistorial.setText("No hay ordenes completadas en el historial.");
-                    return;
-                }
                 txtHistorial.append(String.format("%-25s %-15s %-20s\n", "  PLATILLO COCINADO", "PRECIO", "HORA REGISTRO"));
                 txtHistorial.append("-------------------------------------------------------------\n");
 
-                for(ColaDeOrden orden : listaCompletadas){
+                DateTimeFormatter formateador = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+                for(ColaDeOrden orden : Restaurante.hisorial){
                     String nombrePlatillo = orden.getPlatillo().getNombre();
                     double precio = orden.getPlatillo().getPrecio();
 
-                    String horaStr = orden.getFechaHora().toLocalDateTime().toString().substring(0, 8);
+                    String horaStr = orden.getFechaHora().format(formateador);
 
                     txtHistorial.append(String.format("%-25s $%-14.2f %s hrs\n", nombrePlatillo, precio, horaStr));
-                }catch (IOException ex){
-                    JOptionPane.showMessageDialog(this, "Error al leer el archivo de historial: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                }catch(ClassNotFoundException ex){
-                    JOptionPane.showMessageDialog(this, "Error al cargar el historial: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
     }

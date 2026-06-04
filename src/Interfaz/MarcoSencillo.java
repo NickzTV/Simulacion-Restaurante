@@ -1,6 +1,8 @@
 package Interfaz;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class MarcoSencillo extends JFrame{
     private CardLayout cardLayout;
@@ -8,7 +10,14 @@ public class MarcoSencillo extends JFrame{
 
     public MarcoSencillo(){
         super("Restaurante");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter(){
+            @Override
+            public void windowClosing(WindowEvent e){
+                Restaurante.guardarDatos();
+                System.exit(0);
+            }
+        });
         setSize(1000, 750);
         setLocationRelativeTo(null);
 

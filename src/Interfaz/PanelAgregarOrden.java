@@ -3,8 +3,12 @@ import java.awt.*;
 import java.time.LocalDateTime;
 public class PanelAgregarOrden extends JPanel{
     private MarcoSencillo marco;
-    private JTextField txtCliente, txtMesa, txtPlatillo;
+    private JTextField txtCliente, txtMesa;
+    private JComboBox<String> comboPlatillos;
+    private JComboBox<String> comboTerminos;
+    private JLabel lblTermino;
     private JTextArea txtConsolaEstado;
+
     public PanelAgregarOrden(MarcoSencillo marco){
         this.marco = marco;
         setLayout(new BorderLayout());
@@ -18,7 +22,7 @@ public class PanelAgregarOrden extends JPanel{
         titulo.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
         add(titulo, BorderLayout.NORTH);
 
-        JPanel panelFormulario = new JPanel(new GridLayout());
+        JPanel panelFormulario = new JPanel(new GridBagLayout());
         panelFormulario.setOpaque(false);
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(8, 8, 8, 8);
@@ -43,6 +47,11 @@ public class PanelAgregarOrden extends JPanel{
         lblMesa.setFont(fuenteEtiquetas);
         panelFormulario.add(lblMesa, gbc);
 
+        gbc.gridx = 1;
+        txtMesa = new JTextField(20);
+        txtMesa.setFont(new Font("Arial", Font.PLAIN, 14));
+        panelFormulario.add(txtMesa, gbc);
+
         gbc.gridx = 0;
         gbc.gridy = 2;
         JLabel lblPlatillo = new JLabel("Nombre del Platillo: ");
@@ -50,10 +59,25 @@ public class PanelAgregarOrden extends JPanel{
         panelFormulario.add(lblPlatillo, gbc);
 
         gbc.gridx = 1;
-        txtPlatillo = new JTextField(20);
-        txtPlatillo.setFont(new Font("Arial", Font.PLAIN, 14));
-        panelFormulario.add(txtPlatillo, gbc);
+        comboPlatillos = new JComboBox<>();
+        comboPlatillos.setFont(new Font("Arial", Font.PLAIN, 14));
+        for(Platillos p: Restaurante.Menu){
+            comboPlatillos.addItem(p.getNombre());
+        }
+        panelFormulario.add(comboPlatillos, gbc);
 
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        lblTermino = new JLabel("Término de cocción: ");
+        lblTermino.setFont(fuenteEtiquetas);
+        panelFormulario.add(lblTermino, gbc);
+
+        gbc.gridx = 1;
+        String[] terminos = {"Rare", "Medium rare", "Medium", "Medium well", "Well donde"};
+        comboTerminos = new JComboBox<>(terminos);
+        comboTerminos.setFont(new Font("Arial", Font.PLAIN, 14));
+        panelFormulario.add(comboTerminos, gbc);
+        
         txtConsolaEstado = new JTextArea(6, 30);
         txtConsolaEstado.setEditable(false);
         txtConsolaEstado.setFont(new Font("Consolas", Font.PLAIN, 13));
@@ -72,7 +96,7 @@ public class PanelAgregarOrden extends JPanel{
         panelBotones.setOpaque(false);
 
         JButton btnEnviar = new JButton("Enviar a la cocina");
-        JButton btnVolver = new JButton("Volver al inicio");
+        JButton btnVolver = new JButton("Volver al menú");
 
         btnEnviar.setPreferredSize(new Dimension(200, 45));
         btnEnviar.setBackground(new Color(34, 139, 34));
@@ -90,13 +114,29 @@ public class PanelAgregarOrden extends JPanel{
         panelBotones.add(btnEnviar);
         add(panelBotones, BorderLayout.SOUTH);
 
-        btnVolver.addActionListener(e -> marco.mostrar("INICIO"));
+        comboPlatillos.addActionListener(e ->{
+            int indes = comboPlatillos.getSelectedIndex();
+            if (index>=0){
+                Platillo seleccionado = Restaurante.Menu.get(index);
+                if (selecionado instanceof PlatilloFuerte){
+                    comboTerminos.setEnabled(true);
+                    lblTermino.setEnable(true);
+                }else{
+                    comboTerminos.setEnabled(false);
+                    lblTermino.setEnabled(false);
+                }
+            }
+        });
+        if (comboPlatillos.getItemCount()>0){
+            comboPlatillos.getActionListeners()[0].actionPerformed(null);
+        }
+
+        btnVolver.addActionListener(e -> marco.mostrar("Menu"));
         btnEnviar.addActionListener(e ->{
             String nombreCliente = txtCliente.getText().trim();
             String mesaStr = txtMesa.getText().trim();
-            String nombrePlatillo = txtPlatillo.getText().trim();
 
-            if(nombreCliente.isEmpty() || mesaStr.isEmpty() || nombrePlatillo.isEmpty()){
+            if(nombreCliente.isEmpty() || mesaStr.isEmpty()){
                 JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos.", "Campos incompletos", JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -114,24 +154,25 @@ public class PanelAgregarOrden extends JPanel{
                 return;
             }
 
-             Platillo platilloEncontrado = null;
-             for(Platillo p : Restaurante.Menu){
-                if(p.getNombre().equalsIgnoreCase(nombrePlatillo)){
-                    platilloEncontrado = p;
-                    break;
+            int indexPlatillo = comboPlatillos.getSelectedIndex();
+            Platillo platilloEncontrado = Restaurante.Menu.get(indexPlatillo);
+            if(platilloEncontrado != null){
+                if (platilloEncontrado instanceof PlatilloFuerte){
+                    String terminoStr = (String) comboTerminos.getSelectedItem();
+                    ((PlatilloFuerte) platilloEncontrado).setTerminoCoccion(terminoStr);
                 }
-             }
-             if (platilloEncontrado != null){
-                ColaDeOrden nuevaOrden = new ColaDeOrden(platilloEncontrado, LocalDateTime.now());
+                Cliente cliente = new Cliente(nombreCliente, numeroMesa, false);
+                ColaDeOrden nuevaOrden = new ColaDeOrden(platilloEncontrado, LocalDateTime.now(), cliente);
 
                 Restaurante.colaDeOrdenes.add(nuevaOrden);
 
-                txtConsolaEstado.append("Orden agregada: " +platilloEncontrado.getNombre() + " para mesa " +numeroMesa + " (" + nombreCliente + ")\n");
-                JOptionPane.showMessageDialog(this, "Orden enviada a la cocina");
-                txtPlatillo.setText("");
-                } else {
-                    JOptionPane.showMessageDialog(this, "El platillo " +nombrePlatillo + " no se encuentra en el menú.", "Platillo no encontrado", JOptionPane.WARNING_MESSAGE);
-                }
+                txtConsolaEstado.append("Orden agregada: "+platilloEncontrado.getNombre()+" para mesa " +numeroMesa +" ("+nombreCliente +")");
+                JOptionPane.showMessageDialog(this, "Orden enviada a la cocina con éxito");
+
+                txtCliente.setText("");
+                txtMesa.setText("");
+                txtCliente.requestFocus();
+            }
         });
     }
 

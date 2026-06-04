@@ -17,7 +17,7 @@ public class Restaurante {
     public static void main(String[] args) {
         
 
-        System.out.println("=====Bienvenido al restaurante labubub======");
+        System.out.println("=====Bienvenido al restaurante labubu======");
 
        
         cargarMenu(); 
@@ -40,6 +40,23 @@ public class Restaurante {
         hiloRepostero.start();
         hiloBarista.start();
 
+        //aqui se selecciona Terminal o Interfaz
+        System.out.println("Seleccione el modo de ejecución:");
+        System.out.println("1.- Terminal");
+        System.out.println("2.- Interfaz gráfica");
+        int modo = leerInt("Seleccione una opción", 1, 2);
+        if (modo == 1){
+            ejecutarMenuConsola();
+        }else{
+            System.out.println("Abriendo interfaz gráfica...");
+            javax.swing.SwingUtilities.invokeLater(() ->{
+                MarcoSencillo marco = new MarcoSencillo();
+                marco.setVisible(true);
+            });
+        }
+    }
+
+    public static void ejecutarMenuConsola(){
         boolean salir = false;
         while(!salir){
         System.out.println("=====MENU PRINCIPAL======");
@@ -64,10 +81,18 @@ public class Restaurante {
                     break;
             }
         }
-        //guardar datos antes de salir
+        //guardar datos al salir desde consola
+        guardarDatos();
+        //AdministrarSerializacion.guardarObjetosColaDeOrden(colaDeOrdenes, "ColaDeOrden.dat");
+        //AdministrarSerializacion.guardarObjetosHistorial(historial, "Historial.dat");
+        System.exit(0);
+    }
+
+    public static void guardarDatos(){
+        System.out.println("Guardando datos...");
         AdministrarSerializacion.guardarObjetosColaDeOrden(colaDeOrdenes, "ColaDeOrden.dat");
         AdministrarSerializacion.guardarObjetosHistorial(historial, "Historial.dat");
-        System.exit(0);
+        System.out.println("Datos guardados correctamente.");
     }
 
     //carga todos los platillos del menu como objetos para poder asignarlos a los cocineros segun su especialidad

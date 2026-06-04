@@ -1,9 +1,8 @@
 package Interfaz;
 import javax.swing.*;
 import java.awt.*;
-import java.io.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 public class PanelFiltroFecha extends JPanel{
@@ -27,7 +26,7 @@ public class PanelFiltroFecha extends JPanel{
         JPanel panelControl = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
         panelControl.setOpaque(false);
 
-        JLabel lblOrden = new JLabel("Ordenar por fecha:");
+        JLabel lblOrdenar = new JLabel("Ordenar por fecha:");
         lblOrdenar.setFont(new Font("Arial", Font.BOLD, 14));
         lblOrdenar.setForeground(new Color(120, 62, 23));
 
@@ -64,7 +63,7 @@ public class PanelFiltroFecha extends JPanel{
         JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelInferior.setOpaque(false);
 
-        JButton btnVolver = new JButton("Volver al inicio");
+        JButton btnVolver = new JButton("Volver al menú");
         btnVolver.setFont(new Font("Arial", Font.BOLD, 14));
         btnVolver.setBackground(new Color(153, 9, 9));
         btnVolver.setForeground(Color.WHITE);
@@ -74,39 +73,32 @@ public class PanelFiltroFecha extends JPanel{
         panelInferior.add(btnVolver);
         add(panelInferior, BorderLayout.SOUTH);
 
+        btnVolver.addActionListener(e -> marco.mostrar("Menu"));
+
         btnConsultar.addActionListener(e -> {
             txtReporteFecha.setText("");
 
-            File archivo = new File("Hisotrial.dat");
-            if(!archivo.exists()){
-                txtReporteFecha.setText("No se ha encontrado el archivo de historial.");
+            if(Restaurante.historial == null || Restaurante.historial.isEmpty()){
+                txtReporteFecha.setText("No hay órdenes registradas en el historial");
                 return;
             }
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))){
-                @SuppressWarnings("unchecked")
-                ArrayList<ColaDeOrden> listaOrdenes = (ArrayList<ColaDeOrden>) ois.readObject();
-
-                if(listaOrdenes.isEmpty()){
-                    txtReporteFecha.setText("No hay ordenes registradas en el historial.");
-                    return;
-                }
-                int opcionSeleccionada = comboOrden.getSelectedIndex();
-                if(opcionSeleccionada == 0){
-                    listaOrdenes.sort(Comparator.comparing(ColaDeOrden::getFechaHora));
-                }else {
-                    listaOrdenes.sort(Comparator.comparing(ColaDeOrden::getFechaHora).reversed());
-                }
-                txtReporteFecha.append(String.format("%-20s %-25s %-15s\n", "FECHA Y HORA", "PLATILLO", "PRECIO"));
+            ArrayList<ColaDeOrden> listaFiltrada = new ArrayList<>(Restaurante.historial);
+            int opcionSeleccionada = comboOrden.getSelectedIndex();
+            if(opcionSeleccionada ==0){
+                listaFiltrada.sort(Comparator.comparing(ColaDeOrden::getFechaHora));
+            }else{
+                listaFiltrada.sort(Comparator.comparing(ColaDeOrden::getFechaHora).reversed());
+            }
+                txtReporteFecha.append(String.format("%-22s %-25s %-15s\n", "FECHA Y HORA", "PLATILLO", "PRECIO"));
                 txtReporteFecha.append("-------------------------------------------------------------\n");
-                for(ColaDeOrden orden : listaOrdenes){
-                    String fechaStr = orden.getFechaHora().toString().replace("T", " ").substring(0, 16);
+                DateTimeFormatter formateador = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+                for(ColaDeOrden orden : listaFiltrada){
+                    String fechaStr = orden.getFechaHora().format(formateador);
                     String platillo = orden.getPlatillo().getNombre();
                     double precio = orden.getPlatillo().getPrecio();
-                    txtReporteFecha.append(String.format("%-20s %-25s $%-15.2f\n", fechaStr, platillo, precio));
+                    txtReporteFecha.append(String.format("%-22s %-25s $%-15.2f\n", fechaStr, platillo, precio));
                 }
-            } catch (IOException | ClassNotFoundException ex){
-                JOptionPane.showMessageDialog(this, "Error al cargar el historial: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
         });
     }
 
